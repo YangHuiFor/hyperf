@@ -100,7 +100,7 @@ class BaseClient
         array $metadata = [],
         array $options = []
     ) {
-        $options['headers'] = ($options['headers'] ?? []) + $metadata;
+        $options['headers'] = ($options['headers'] ?? []) + $metadata + ($this->options['headers'] ?? []);
         $streamId = retry($this->options['retry_attempts'] ?? 3, function () use ($method, $argument, $options) {
             $streamId = $this->send($this->buildRequest($method, $argument, $options));
             if ($streamId <= 0) {
